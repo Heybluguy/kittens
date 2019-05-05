@@ -5,11 +5,20 @@ class KittensController < ApplicationController
   # GET /kittens.json
   def index
     @kittens = Kitten.all
+    respond_to do |format|
+			format.html
+			format.json { render :json => @kittens }
+		end
   end
 
   # GET /kittens/1
   # GET /kittens/1.json
   def show
+    @kitten = Kitten.find(params[:id])
+    respond_to do |format|
+			format.html
+			format.json { render :json => @kitten }
+		end
   end
 
   # GET /kittens/new
@@ -25,7 +34,6 @@ class KittensController < ApplicationController
   # POST /kittens.json
   def create
     @kitten = Kitten.new(kitten_params)
-    # @label = "Create kitten"
     respond_to do |format|
       if @kitten.save
         format.html { redirect_to @kitten, notice: 'Kitten was successfully created.' }
@@ -40,7 +48,6 @@ class KittensController < ApplicationController
   # PATCH/PUT /kittens/1
   # PATCH/PUT /kittens/1.json
   def update
-    # @label = "Update kitten"
     respond_to do |format|
       if @kitten.update(kitten_params)
         format.html { redirect_to @kitten, notice: 'Kitten was successfully updated.' }
